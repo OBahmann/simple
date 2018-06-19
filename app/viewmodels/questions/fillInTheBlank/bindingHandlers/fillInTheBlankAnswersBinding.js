@@ -14,7 +14,7 @@
             _.each(value, function (blank) {
                 var source = $('[data-group-id=' + blank.id + ']', $element),
                     handler = function () {
-                        blank.value = source.val().trim();
+                        blank.value = window.HtmlEntity.encodeTags(source.val().trim());
                     },
                     stopPropagationHandler = function (event) {
                         event.stopPropagation();
@@ -47,13 +47,14 @@
             } else {
                 _.each(inputValues, function (blank) {
                     var $source = $('[data-group-id=' + blank.id + ']', $element);
+                    var value = window.HtmlEntity.decodeTags(blank.value);
                     var defaultText = '...';
 
                     if ($source.is('input')) {
-                        $source.val(blank.value || defaultText);
+                        $source.val(value || defaultText);
                         $source.attr('disabled', 'disabled');
                     } else if ($source.is('select')) {
-                        $source.select('updateValue', blank.value || defaultText);
+                        $source.select('updateValue', value || defaultText);
                         $source.select('enabled', false);
                     }
                 });
