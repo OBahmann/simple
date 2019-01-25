@@ -1,5 +1,5 @@
-﻿define(['durandal/app', 'context', 'plugins/router', 'plugins/http', 'templateSettings'],
-    function (app, context, router, http, templateSettings) {
+﻿define(['durandal/app', 'context', 'plugins/router', 'plugins/http', 'templateSettings', 'xss'],
+    function (app, context, router, http, templateSettings, xss) {
         var viewModel = {
             courseTitle: context.course.title,
             content: null,
@@ -24,7 +24,7 @@
             return Q.fcall(function () {
                 return context.course.hasIntroductionContent 
                     && http.get('content/content.html').then(function (response) {
-                        viewModel.content = response;
+                        viewModel.content = xss.filter(response);
                     }).fail(function () {
                         viewModel.content = '';
                     });

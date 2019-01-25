@@ -44,6 +44,7 @@
     "husky": "^0.13.1"
   },
   "dependencies": {
+    "@easygenerator/xss": "^0.1.1",
     "gulp-install": "^1.1.0"
   }
 }

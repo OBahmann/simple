@@ -34,6 +34,10 @@ define('download', function () {
     return download;
 });
 
+define('xss', function () {
+    return egxss;
+});
+
 define(['durandal/app', 'durandal/system', 'underscore', 'bootstrapper', 'templateSettings', 'publishSettings', 'includedModules/modulesInitializer',
         'modules/index', 'modules/publishModeProvider', 'errorTracking/errorTracker'
     ],

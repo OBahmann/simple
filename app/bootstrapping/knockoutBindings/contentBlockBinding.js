@@ -1,10 +1,10 @@
-define(['durandal/composition', 'helpers/documentBlock'], function (composition, documentBlockHelper) {
+define(['durandal/composition', 'helpers/documentBlock', 'xss'], function (composition, documentBlockHelper, xss) {
     ko.bindingHandlers.contentBlock = {
         init: function (element, valueAccessor) {
             var $element = $(element),
-                html = valueAccessor();
+                html = xss.filter(valueAccessor()),
             
-            var dataType = getContentBlockType(html);
+                dataType = getContentBlockType(html);
             
             switch(dataType){
                 case 'hotspot': {
