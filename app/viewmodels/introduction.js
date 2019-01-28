@@ -1,5 +1,5 @@
-﻿define(['q', 'context', 'plugins/router', 'plugins/http', 'templateSettings', 'xss'],
-    function (Q, context, router, http, templateSettings, xss) {
+﻿define(['q', 'context', 'plugins/router', 'helpers/htmlLoader', 'templateSettings'],
+    function (Q, context, router, htmlLoader, templateSettings) {
         var viewModel = {
             courseTitle: context.course.title,
             content: null,
@@ -23,8 +23,8 @@
         viewModel.activate = function () {
             return Q.fcall(function () {
                 return context.course.hasIntroductionContent 
-                    && http.get('content/content.html').then(function (response) {
-                        viewModel.content = xss.filter(response);
+                    && htmlLoader.load('content/content.html').then(function (response) {
+                        viewModel.content = response;
                     }).fail(function () {
                         viewModel.content = '';
                     });

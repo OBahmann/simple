@@ -1,4 +1,4 @@
-﻿define(['knockout', 'underscore', 'q', 'plugins/http', 'xss'], function (ko, _, Q, http, xss) {
+﻿define(['knockout', 'underscore', 'q', 'helpers/htmlLoader'], function (ko, _, Q, htmlLoader) {
 	"use strict";
 
 	function FillInTheBlank() {
@@ -60,11 +60,10 @@
 	    var self = this;
 	    return Q.fcall(function () {
 	        var contentUrl = 'content/' + self.question.sectionId + '/' + self.question.id + '/content.html';
-	        return http.get(contentUrl)
-                .then(function (response) {
-					var safeContent = xss.filter(response);
-					self.content = safeContent;
-					self.question.content = safeContent;
+	        return htmlLoader.load(contentUrl)
+                .then(function (content) {
+					self.content = content;
+					self.question.content = content;
                 })
                 .fail(function () {
                     self.content = '';

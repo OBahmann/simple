@@ -1,5 +1,5 @@
-﻿define(['knockout', 'q', 'underscore', 'eventManager', 'plugins/http', 'constants', 'xss'], 
-    function (ko, Q, _, eventManager, http, constants, xss) {
+﻿define(['knockout', 'q', 'underscore', 'eventManager', 'helpers/htmlLoader', 'constants'], 
+    function (ko, Q, _, eventManager, htmlLoader, constants) {
     "use strict";
 
     function Question(spec, _protected) {
@@ -108,13 +108,13 @@
             incorrectFeedbackContentUrl = feedbackUrlPath + 'incorrectFeedback.html';
 
         if (that.feedback.hasCorrect) {
-            requests.push(loadPage(correctFeedbackContentUrl).then(function (content) {
-                that.feedback.correct = xss.filter(content);
+            requests.push(htmlLoader.load(correctFeedbackContentUrl).then(function (content) {
+                that.feedback.correct = content;
             }));
         }
         if (that.feedback.hasIncorrect) {
-            requests.push(loadPage(incorrectFeedbackContentUrl).then(function (content) {
-                that.feedback.incorrect = xss.filter(content);
+            requests.push(htmlLoader.load(incorrectFeedbackContentUrl).then(function (content) {
+                that.feedback.incorrect = content;
             }));
         }
 
@@ -126,8 +126,8 @@
         var promises = [];
         _.each(items, function(item) {
             if (typeof item.content === typeof undefined) {
-                promises.push(loadPage(item.contentUrl).then(function(content) {
-                    item.content = xss.filter(content);
+                promises.push(htmlLoader.load(item.contentUrl).then(function(content) {
+                    item.content = content;
                 }));
             }
 
@@ -136,9 +136,4 @@
 
         return Q.allSettled(promises);
     }
-
-    function loadPage(contentUrl) {
-        return http.get(contentUrl);
-    }
-
 });

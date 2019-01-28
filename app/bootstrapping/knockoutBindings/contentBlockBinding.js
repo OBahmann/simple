@@ -1,8 +1,8 @@
-define(['durandal/composition', 'helpers/documentBlock', 'xss'], function (composition, documentBlockHelper, xss) {
+define(['knockout', 'jquery', 'durandal/composition', 'helpers/documentBlock'], function (ko, $, composition, documentBlockHelper) {
     ko.bindingHandlers.contentBlock = {
         init: function (element, valueAccessor) {
             var $element = $(element),
-                html = xss.filter(valueAccessor()),
+                html = valueAccessor(),
             
                 dataType = getContentBlockType(html);
             

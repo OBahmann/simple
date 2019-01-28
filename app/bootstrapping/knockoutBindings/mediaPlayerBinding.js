@@ -1,11 +1,11 @@
-﻿define(['knockout', 'jquery', 'xss'], function (ko, $, xss) {
+﻿define(['knockout', 'jquery'], function (ko, $) {
     ko.bindingHandlers.mediaPlayer = {
         init: function (element, valueAccessor) {
 
             var
                 $element = $(element),
                 args = valueAccessor(),
-                embedCode = xss.filter(ko.utils.unwrapObservable(args.embedCode));
+                embedCode = ko.utils.unwrapObservable(args.embedCode);
 
             $element.html(getMediaEmbedCode(embedCode));
 

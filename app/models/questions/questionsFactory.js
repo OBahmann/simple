@@ -31,7 +31,7 @@
                     return mapContentBlock(instruction, sectionId, question.id);
                 }),
                 score: 0,
-                voiceOver: question.voiceOver,
+                voiceOver: xss.filter(question.voiceOver),
                 hasCorrectFeedback: question.hasCorrectFeedback,
                 hasIncorrectFeedback: question.hasIncorrectFeedback
             };
