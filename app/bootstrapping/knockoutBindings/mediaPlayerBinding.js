@@ -1,29 +1,28 @@
-﻿define(function () {
+﻿define(['knockout', 'jquery', 'xss'], function (ko, $, xss) {
     ko.bindingHandlers.mediaPlayer = {
         init: function (element, valueAccessor) {
 
             var
                 $element = $(element),
                 args = valueAccessor(),
-                embedCode = ko.utils.unwrapObservable(args.embedCode);
+                embedCode = xss.filter(ko.utils.unwrapObservable(args.embedCode));
 
-            $element.html(getMediaEmbedCode());
+            $element.html(getMediaEmbedCode(embedCode));
 
             ko.utils.domNodeDisposal.addDisposeCallback(element, function () {
-                $iframe = $element.find('iframe');
+                var $iframe = $element.find('iframe');
                 if ($iframe.length) {
                     $iframe.attr('src', 'about:blank');
                 }
                 $element.empty();
             });
 
-            function getMediaEmbedCode() {
-
-                if (!embedCode)
-                    return embedCode;
+            function getMediaEmbedCode(_embedCode) {
+                if (!_embedCode)
+                    return _embedCode;
 
                 var srcAttrName = 'src',
-                    $container = $('<div/>').html(embedCode),
+                    $container = $('<div/>').html(_embedCode),
                     $iframe = $container.find('iframe'),
                     src = $iframe.attr(srcAttrName),
                     variablesList = getVariablesList();

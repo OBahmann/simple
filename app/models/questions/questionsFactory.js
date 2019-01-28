@@ -1,10 +1,10 @@
-﻿define(['guard', 'constants', 'models/contentBlock', 'models/questions/multipleSelectQuestion',
+﻿define(['underscore', 'guard', 'constants', 'xss', 'models/contentBlock', 'models/questions/multipleSelectQuestion',
         'models/questions/fillInTheBlankQuestion', 'models/questions/dragAndDropQuestion',
         'models/questions/singleSelectImageQuestion', 'models/questions/textMatchingQuestion',
         'models/questions/informationContent', 'models/questions/statementQuestion', 'models/questions/hotspot',
         'models/questions/openQuestion', 'models/questions/scenarioQuestion', 'models/questions/rankingTextQuestion'
     ],
-    function (guard, constants, ContentBlock, MultipleSelectQuestion, FillInTheBlankQuestion, DragAndDropQuestion,
+    function (_, guard, constants, xss, ContentBlock, MultipleSelectQuestion, FillInTheBlankQuestion, DragAndDropQuestion,
         SingleSelectImageQuestion, TextMatchingQuestion, InformationContent,
         StatementQuestion, Hotspot, OpenQuestion, ScenarioQuestion, RankingText) {
         "use strict";
@@ -73,7 +73,7 @@
                 case constants.questionTypes.openQuestion:
                     return new OpenQuestion(questionData);
                 case constants.questionTypes.scenario:
-                    questionData.embedCode = question.embedCode;
+                    questionData.embedCode = xss.filter(question.embedCode);
                     questionData.masteryScore = question.masteryScore;
                     questionData.projectId = question.projectId;
                     questionData.embedUrl = question.embedUrl;

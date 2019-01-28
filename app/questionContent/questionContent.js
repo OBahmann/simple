@@ -1,5 +1,5 @@
-define(['knockout', 'plugins/router', 'constants', 'modules/questionsNavigation', 'viewmodels/questions/questionsViewModelFactory', 'templateSettings', 'localizationManager', 'context'],
-    function (ko, router, constants, navigationModule, questionViewModelFactory, templateSettings, localizationManager, context) {
+define(['knockout', 'underscore', 'plugins/router', 'modules/questionsNavigation', 'viewmodels/questions/questionsViewModelFactory', 'templateSettings', 'localizationManager', 'context'],
+    function (ko, _, router, navigationModule, questionViewModelFactory, templateSettings, localizationManager, context) {
         "use strict";
 
         function QuestionContent() {

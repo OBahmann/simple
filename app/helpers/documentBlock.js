@@ -1,7 +1,8 @@
-define(['localizationManager', 'constants'], function (localizationManager, constants) {
+define(['jquery', 'localizationManager', 'constants', ''], function ($, localizationManager, constants, xss) {
     return {
         getDocumentBlockContent: function (html) {
-            var $output = $('<output>').html(html),
+            var safeHtml = xss.filter(html),
+                $output = $('<output>').html(safeHtml),
                 $container = $output.find(constants.documents.containerSelector);
 
             var downloadText = localizationManager.getLocalizedText(constants.documents.downloadLocalizationKey);

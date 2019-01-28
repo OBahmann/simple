@@ -1,5 +1,5 @@
-﻿define(['durandal/app', 'context', 'plugins/router', 'plugins/http', 'templateSettings', 'xss'],
-    function (app, context, router, http, templateSettings, xss) {
+﻿define(['q', 'context', 'plugins/router', 'plugins/http', 'templateSettings', 'xss'],
+    function (Q, context, router, http, templateSettings, xss) {
         var viewModel = {
             courseTitle: context.course.title,
             content: null,

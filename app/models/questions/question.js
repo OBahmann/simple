@@ -1,4 +1,5 @@
-﻿define(['eventManager', 'guard', 'plugins/http', 'constants'], function (eventManager, guard, http, constants) {
+﻿define(['knockout', 'q', 'underscore', 'eventManager', 'plugins/http', 'constants', 'xss'], 
+    function (ko, Q, _, eventManager, http, constants, xss) {
     "use strict";
 
     function Question(spec, _protected) {
@@ -108,12 +109,12 @@
 
         if (that.feedback.hasCorrect) {
             requests.push(loadPage(correctFeedbackContentUrl).then(function (content) {
-                that.feedback.correct = content;
+                that.feedback.correct = xss.filter(content);
             }));
         }
         if (that.feedback.hasIncorrect) {
             requests.push(loadPage(incorrectFeedbackContentUrl).then(function (content) {
-                that.feedback.incorrect = content;
+                that.feedback.incorrect = xss.filter(content);
             }));
         }
 
@@ -126,7 +127,7 @@
         _.each(items, function(item) {
             if (typeof item.content === typeof undefined) {
                 promises.push(loadPage(item.contentUrl).then(function(content) {
-                    item.content = content;
+                    item.content = xss.filter(content);
                 }));
             }
 
